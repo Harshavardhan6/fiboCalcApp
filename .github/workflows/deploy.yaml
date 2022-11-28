@@ -2,7 +2,7 @@ name: Deploy MultiContainerDocker
 on:
   push:
     branches:
-      - main
+      - master
 
 jobs:
   build:
