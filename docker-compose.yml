@@ -3,10 +3,8 @@ services:
   client:
     image: "hpilli/multi-client-10-14"
     hostname: client
-
   server:
     image: "hpilli/multi-server-10-14"
-
     hostname: api
     environment:
       - REDIS_HOST=$REDIS_HOST
@@ -18,14 +16,12 @@ services:
       - PGPORT=$PGPORT
   worker:
     image: "hpilli/multi-worker-10-14"
-
     hostname: worker
     environment:
       - REDIS_HOST=$REDIS_HOST
       - REDIS_PORT=$REDIS_PORT
   nginx:
     image: "hpilli/multi-nginx-10-14"
-
     hostname: nginx
     ports:
       - "80:80"
