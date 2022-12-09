@@ -14,6 +14,6 @@ spec:
     spec:
       containers:
         - name: client
-          image: hpilli/multi-client-10-14
+          image: hpilli/multi-client-k8sazure
           ports:
             - containerPort: 3000

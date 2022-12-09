@@ -2,8 +2,7 @@ name: Deploy MultiContainerDocker
 on:
   push:
     branches:
-      - master
-
+      - k8sazure
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -13,27 +12,15 @@ jobs:
       - run: docker build -t hpilli/react-test -f ./client/Dockerfile.dev ./client
       - run: docker run -e CI=true hpilli/react-test npm test
 
-      - run: docker build -t hpilli/multi-client-10-14 ./client
-      - run: docker build -t hpilli/multi-nginx-10-14 ./nginx
-      - run: docker build -t hpilli/multi-server-10-14 ./fiboCalcServer
-      - run: docker build -t hpilli/multi-worker-10-14 ./fiboCalcWorker
+      - run: docker build -t hpilli/multi-client-k8sazure ./client
+      - run: docker build -t hpilli/multi-nginx-k8sazure ./nginx
+      - run: docker build -t hpilli/multi-server-k8sazure ./fiboCalcServer
+      - run: docker build -t hpilli/multi-worker-k8sazure ./fiboCalcWorker
 
-      - run: docker push hpilli/multi-client-10-14
-      - run: docker push hpilli/multi-nginx-10-14
-      - run: docker push hpilli/multi-server-10-14
-      - run: docker push hpilli/multi-worker-10-14
+      - run: docker push hpilli/multi-client-k8sazure
+      - run: docker push hpilli/multi-nginx-k8sazure
+      - run: docker push hpilli/multi-server-k8sazure
+      - run: docker push hpilli/multi-worker-k8sazure
 
       - name: Generate deployment package
         run: zip -r deploy.zip . -x '*.git*'
-
-      - name: Deploy to EB
-        uses: einaregilsson/beanstalk-deploy@v18
-        with:
-          aws_access_key: ${{ secrets.AWS_ACCESS_KEY }}
-          aws_secret_key: ${{ secrets.AWS_SECRET_KEY }}
-          application_name: multicontainer-docker
-          environment_name: Multicontainerdocker-env
-          existing_bucket_name: elasticbeanstalk-eu-central-1-167203292282
-          region: eu-central-1
-          version_label: ${{ github.sha }}
-          deployment_package: deploy.zip

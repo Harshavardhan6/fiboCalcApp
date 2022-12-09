@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: worker
-          image: hpilli/multi-worker-10-14
+          image: hpilli/multi-worker-k8sazure
           env:
             - name: REDIS_HOST
               value: redis-cluster-ip-service

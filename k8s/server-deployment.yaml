@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: server
-          image: hpilli/multi-server-10-14
+          image: hpilli/multi-server-k8sazure
           ports:
             - containerPort: 5000
           env:
